@@ -19,7 +19,7 @@
 int main(void)
 {
 	char *cmd = NULL, *cmd_copy = NULL, *token, **argv;
-	int isEOF = 1, index = 0, tokens = 0, argc, status;
+	int isEOF = 1, index = 0, tokens = 0, argc, status, killme = 0;
 	size_t n = 0;
 	ssize_t cmd_count;
 	const char *delimiter = " \n";
@@ -43,6 +43,7 @@ int main(void)
 		if (cmd_copy == NULL)
 		{
 			perror("Unscuessful Allocation");
+			killme = 1;
 			return (-1);
 		}
 		else
@@ -52,6 +53,8 @@ int main(void)
 			tokenize_str(token, tokens, cmd, delimiter);
 			argv = malloc(sizeof(char *) * tokens);
 			store_tokens(token, cmd_copy, argv, delimiter, index);
+			if (killme != 1)
+			{
 			momo_pid = fork();
 			if (momo_pid == -1)
 			{
@@ -69,6 +72,7 @@ int main(void)
 			{
 				wait(&status);
 			}
+			}			
 		}
 	}
 	free(cmd_copy);
