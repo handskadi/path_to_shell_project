@@ -37,9 +37,13 @@ int main(void)
 		{
 			__print(EOF_message);
 			exit(EXIT_FAILURE);
+			free(cmd);
+			free(cmd_copy);
+			isEOF = 0;
 			break;
 			return (-1);
 		}
+
 		cmd_copy = malloc(sizeof(char) * cmd_count);
 		if (cmd_copy == NULL)
 		{
