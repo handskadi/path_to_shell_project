@@ -19,11 +19,12 @@
 int main(void)
 {
 	char *cmd = NULL, *cmd_copy = NULL, *token, **argv;
-	int isEOF = 1, index = 0, tokens = 0, argc;
+	int isEOF = 1, index = 0, tokens = 0, argc, status;
 	size_t n = 0;
 	ssize_t cmd_count;
 	const char *delimiter = " \n";
 	char *shell_prompt = "Alx-Shell> ", *EOF_message = "Bye.. \n";
+	pid_t momo_pid;
 
 	(void)argc;
 
@@ -35,7 +36,8 @@ int main(void)
 		if (cmd_count == -1)
 		{
 			__print(EOF_message);
-			return (-1);
+			exit(EXIT_FAILURE);
+			/*return (-1);*/
 		}
 		cmd_copy = malloc(sizeof(char) * cmd_count);
 		if (cmd_copy == NULL)
@@ -50,13 +52,26 @@ int main(void)
 			tokenize_str(token, tokens, cmd, delimiter);
 			argv = malloc(sizeof(char *) * tokens);
 			store_tokens(token, cmd_copy, argv, delimiter, index);
-
-			/* Run the commands */
-			execute_command(argv);
+			momo_pid = fork();
+			if (momo_pid == -1)
+			{
+				free(cmd_copy);
+				free(cmd);
+				exit(EXIT_FAILURE);
+			}
+			
+			if (momo_pid == 0)
+			{
+				/* Run the commands */
+				execute_command(argv);
+			}
+			else
+			{
+				wait(&status);
+			}
 		}
 	}
 	free(cmd_copy);
 	free(cmd);
 	return (0);
 }
-

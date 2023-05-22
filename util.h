@@ -100,28 +100,22 @@ char *get_path(char *cmd)
 
 			if (stat(full_path, &buffer) == 0)
 			{
-				printf("debug: 1 \n");
 				free(path_cpy);
 				return (full_path);
 			}
 			else
 			{
-				printf("debug: 2\n");
 				free(full_path);
 				p_token = strtok(NULL, ":");
 			}
 		}
-		printf("debug: 3\n");
 		free(path_cpy);
 		if (stat(cmd, &buffer) == 0)
 		{
-			printf("debug: 4\n");
 			return (cmd);
 		}
-		printf("debug: 5\n");
 		return (NULL);
 	}
-	printf("debug: 6\n");
 	return (NULL);
 }
 
@@ -142,7 +136,8 @@ void execute_command(char **argv)
 		actual_cmd = get_path(cmd);
 		if (execve(actual_cmd, argv, NULL) == -1)
 		{
-			perror("Oops!..");
+			printf("%s: No such file or directory\n", argv[0]);
+			/*perror("Oops!..");*/
 		}
 	}
 }
