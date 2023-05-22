@@ -90,4 +90,18 @@ char *duplicate_string(const char *string)
 	}
 	return duplicate;
 }
+
+int string_compare(char *str1, char *str2)
+{
+	while (*str1 == *str2)
+	{
+		if (*str1 == '\0')
+		{
+			return 0;
+		}
+		str1++;
+		str2++;
+	}
+	return (*str1 - *str2);
+}
 #endif

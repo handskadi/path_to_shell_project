@@ -42,6 +42,35 @@ void store_tokens(char *tkn, char *cmd, char **arg, const char *delim, int i)
 	}
 	arg[i] = NULL;
 }
+
+/**
+ * get_path_var - this will get path variable
+ * Description: this will get the path variable using **environ
+ *
+ * Return: NULL
+ */
+char* get_path_var()
+{
+	extern char **environ;
+	char **env  = environ;
+
+	while (*env != NULL)
+	{
+		char *current_env = *env;
+		int i;
+		for (i =  0; current_env[i] != '\0' && current_env[i] != '='; i++)
+		{
+
+		}
+		if (string_compare(current_env, "PATH") == 0)
+		{
+			return current_env + i +1;
+		}
+		env++;
+	}
+	return NULL;
+}
+
 /**
  * get_path - get the variable path of sys
  * @cmd: content of the path to be tokenized
