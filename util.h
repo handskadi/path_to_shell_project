@@ -10,7 +10,7 @@
  * @delim: Delimiter
  */
 
-void tokenize_str(char *tkn, int tkns, char *cmd, const char *delim)
+int tokenize_str(char *tkn, int tkns, char *cmd, const char *delim)
 {
 	tkn = strtok(cmd, delim);
 	while (tkn != NULL)
@@ -18,7 +18,7 @@ void tokenize_str(char *tkn, int tkns, char *cmd, const char *delim)
 		tkns++;
 		tkn = strtok(NULL, delim);
 	}
-	tkns++;
+	return tkns++;
 }
 
 /**
@@ -36,7 +36,7 @@ void store_tokens(char *tkn, char *cmd, char **arg, const char *delim, int i)
 	tkn = strtok(cmd, delim);
 	for (i = 0; tkn != NULL; i++)
 	{
-		arg[i] = malloc(sizeof(char) * string_length(tkn));
+		arg[i] = malloc(sizeof(char) * string_length(tkn) + 1);
 		make_string_copy(arg[i], tkn);
 		tkn = strtok(NULL, delim);
 	}

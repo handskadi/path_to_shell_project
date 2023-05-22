@@ -32,7 +32,7 @@ char *make_string_copy(char *destination, char *source)
 	int len, i;
 
 	len = 0;
-	while(source[len] |= '\0')
+	while(source[len] != '\0')
 	{
 		len++;
 	}
