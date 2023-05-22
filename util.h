@@ -138,6 +138,7 @@ void execute_command(char **argv)
 		{
 			printf("%s: No such file or directory\n", argv[0]);
 			/*perror("Oops!..");*/
+			free(cmd);
 		}
 	}
 }
